@@ -44,3 +44,22 @@ Estão marcados como abertos dentro do próprio guia, e não foram inventados:
 A geometria vem das grades que revestem a Sala Abaixo, no subsolo da Cidade
 Matarazzo, do formato e dos ângulos dos painéis de LED, e da terra que ficou
 nos pilares.
+
+## Uma nota sobre os arquivos da PP Neue Montreal Mono
+
+No repositório de origem os arquivos da Mono estão com os nomes trocados.
+Medido: `Bold.ttf` e `Light.ttf` são byte a byte o mesmo arquivo, e o nome
+interno dele diz Regular. `Bold-Verified.ttf` é igual a `Regular.ttf`, e
+`Medium.ttf` tem nome interno "Regular Italic".
+
+Ordenando os quatro arquivos distintos pela tinta que cada um cobre:
+
+| arquivo | tinta | peso real |
+|---|---|---|
+| `Light.ttf` = `Bold.ttf` | 5,2% | o mais leve |
+| `Medium.ttf` | 13,8% | nome interno diz Italic |
+| `Book.ttf` | 16,2% | regular |
+| `Regular.ttf` = `Bold-Verified.ttf` | 23,7% | o mais pesado |
+
+Este guia embute os três pesos escolhidos por essa medida, e não pelo nome
+do arquivo.
