@@ -2194,6 +2194,17 @@ body{background:#000;color:var(--ink)}
   font-size:clamp(9px,.68vw,10.5px);line-height:1.3;color:#F5F4F0;
   background:rgba(19,19,19,.94);border-radius:4px;padding:.28em .5em;
   width:fit-content}
+
+/* ══ O corpo grande respeita a altura ═══════════════════════════════
+   8,33% da largura é a medida do manual, mas lá a prancha é 16:9 fixa.
+   Aqui a janela pode ser larga e baixa, e aí a declaração estourava a
+   prancha. Em 16:9, 8,33vw equivale a 14,81vh: com min() das duas, o
+   tamanho é o mesmo do manual na proporção dele e encolhe fora dela. */
+.declara h2,.divider h2,.divider .dv-k{
+  font-size:min(8.33vw, 14.81vh)}
+@media (max-width:880px){
+  .declara h2{font-size:min(11vw, 13vh)}
+  .divider h2,.divider .dv-k{font-size:min(11vw, 13vh)}}
 </style>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="mk" viewBox="0 0 81 28">
