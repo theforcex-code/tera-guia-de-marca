@@ -2308,6 +2308,10 @@ h2 em{font-weight:400;letter-spacing:-.02em}
     max-width:min(100%,calc((100cqh - 15cqh) / var(--k)))}
   .board.grade .folio{grid-column:1 / -1;grid-row:2;padding:1.5cqh 0 4.4cqw}
 }
+
+/* O carimbo do ano repete o que o rodapé já diz, em toda prancha e em
+   qualquer largura. Sai. */
+.pg::before,.board::before{content:none}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
