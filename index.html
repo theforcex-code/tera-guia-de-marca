@@ -3787,6 +3787,72 @@ table.xv thead th,table.xv tbody th,table.xv tbody td{font-size:var(--t-mini)}
 .fl-d{font-size:var(--t-micro);letter-spacing:.16em;font-weight:400;
   color:var(--ink-3);text-transform:uppercase;line-height:1.3}
 .fl{align-items:baseline}
+
+/* ══════════════════════════════════════════════════════════════════
+   O VÃO ENTRE ITENS DERIVA DO TIPO, NÃO DA PÁGINA
+   Medido: em toda lista o vão entre itens era menor que a entrelinha
+   dentro do item - 7px contra 37 em faça/não faça, 0 contra 41 na
+   linha de lista. Um item quebrado em duas linhas ficava mais espalhado
+   que dois itens vizinhos.
+   Conta: linha de base a linha de base entre itens = 1,55 vez a de
+   dentro. Com entrelinha L, o vão é 0,55 L.
+   ══════════════════════════════════════════════════════════════════ */
+
+/* faça / não faça: entrelinha 1,22 -> vão 0,67em */
+.dd ul{gap:0}
+.dd li{padding:.34em 0;line-height:1.22}
+
+/* linha de lista: entrelinha 1,2 -> 0,33em de cada lado */
+.lin{padding:.33em 0}
+.lin .lc,.lin .ln,.lin .ld,.lin .ls{line-height:1.2}
+
+/* ficha: o par rótulo/valor é UM item; o vão separa pares */
+.fi{padding:.30em 0;row-gap:.1em}
+#missao .fi{padding:.34em 0}
+
+/* referência rápida: par empilhado, mesmo raciocínio */
+.rf-l{padding:.32em 0;gap:.12em}
+
+/* sumário: entrelinha 0,86 -> 0,235em de cada lado */
+.su{padding:.24em 0}
+
+/* pendências e cartões: o vão de linha da grade sai da descrição */
+.fl{padding:.30em 0}
+.md-grade,.pl-par{row-gap:1.9em}
+.md-d,.pl-d,.fl-d{line-height:1.22}
+
+/* nota: parágrafo seguinte a 0,55 da entrelinha */
+.say p{line-height:1.3}
+.say p + p{margin-top:.72em}
+
+/* espécime e paleta: a ficha de valores segue a mesma conta */
+.pc-vals{gap:.34em}
+.cd{gap:.3em}
+.es-c p{line-height:1.35}
+
+/* ── A caixa da linha e menor que a linha ───────────────────────────
+   Medido no divisor: fonte de 126px, caixa de linha de 103,8. A caixa
+   tipografica da Indivisible mede 1,207em - ascendente mais
+   descendente - entao com entrelinha 0,82 a meia-entrelinha e
+   NEGATIVA: -0,194em. O bloco do titulo comeca 25px acima do fio de
+   cima da prancha, e a capitular sobra 10px do topo contra os 28 que
+   a referencia deixa.
+   Isso vale para toda entrelinha abaixo de 1,207: quanto mais apertada
+   a entrelinha, mais o glifo sai da caixa. A folga de cima compensa a
+   parte que saiu. */
+.divider h2,.cv-l1,.pg.manifesto h2,.sc-texto h2,.ab-tese,
+.pg:not(.prancha):not(.cover):not(.especime) .top h2,.tc-tit,
+.especime h2{padding-top:.16em}
+.dv-num{padding-top:0}
+
+/* A folga de cima do divisor e da capa media 0: a regra que eu tinha
+   escrito para .divider perdia para uma anterior com o mesmo peso. Vai
+   ancorada no palco, que ganha, e usa os 3,6% da altura que a
+   referencia deixa acima da capitular. */
+@media (min-width:1180px) and (min-height:700px){
+  .palco > .divider{padding-top:3.6cqh}
+  .palco > .pg.cover{padding-top:3.6cqh}
+}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
