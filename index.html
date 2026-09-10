@@ -3043,7 +3043,10 @@ table.xv tbody th,table.xv tbody td{font-size:var(--t-corpo)}
 .fv{letter-spacing:.08em}
 .folio .n{margin-left:auto;flex:0 0 auto;font-size:var(--t-micro);
   letter-spacing:.08em}
-@media (max-width:880px){.fg:last-of-type{display:none}}
+/* Esconder a ultima ficha era para o RODAPE, que tem tres e nao cabem
+   em 880. Sem escopo a regra pegava tambem a ficha da capa, e o
+   'MODULO / X = largura / 98' sumia no telefone. */
+@media (max-width:880px){.folio .fg:last-of-type{display:none}}
 
 /* ── o divisor: título grande, número entre parênteses embaixo ──────*/
 .dv-num{position:static;font-size:var(--t-cab);line-height:.9;
@@ -3449,6 +3452,284 @@ table.xv thead th,table.xv tbody th,table.xv tbody td{font-size:var(--t-mini)}
 @media (min-width:1180px) and (min-height:700px){
   .palco > #missao,.palco > #social{padding-bottom:clamp(76px,12.5cqh,138px)}
 }
+
+/* ══════════════════════════════════════════════════════════════════
+   ESCALA DE ESPAÇO
+   Origem: a margem da prancha, 2,2% da largura. Eram 27 vãos
+   distintos; passam a ser seis, todos fração ou múltiplo dela.
+   ══════════════════════════════════════════════════════════════════ */
+@media (min-width:1180px) and (min-height:700px){
+  .palco > section{
+    --e1:0.55cqw; --e2:1.10cqw; --e3:2.20cqw;
+    --e4:3.30cqw; --e5:4.40cqw; --e6:6.60cqw;
+    --edge:var(--e3)}
+  /* as pranchas que sangram contam 1377 e não 1240: a escala é a
+     mesma em pixel, então o valor em cqw encolhe na mesma razão */
+  .palco > .pg.especime,.palco > .pg.paleta-cheia,.palco > .pg.foto-cheia,
+  .palco > .pg.cover,.palco > .pg.sala-cheia{
+    --e1:0.50cqw; --e2:0.99cqw; --e3:1.98cqw;
+    --e4:2.97cqw; --e5:3.96cqw; --e6:5.94cqw}
+}
+@media (max-width:1179px),(max-height:699px){
+  :root{--e1:5px; --e2:10px; --e3:20px;
+        --e4:30px; --e5:40px; --e6:60px}
+}
+
+/* ══ A GRADE ═══════════════════════════════════════════════════════
+   Vão igual em toda prancha. Com o vão igual, 2, 3, 4 e 6 colunas
+   caem nas mesmas verticais de uma grade de doze.
+   ══════════════════════════════════════════════════════════════════ */
+.art.md-grade,.art.pl-par,.art.refs,.art.dd-par,.art.tipos,
+.art.chapas,.art.imagens,.art.modos,.art.variacoes,.art.sumario,
+.art.as-par,.art.formatos,.art.indice,.art.xpar,.art.ab-grade,
+.cr-tudo,.pcs,.es-cols,.menu-grade{
+  column-gap:var(--e3);row-gap:var(--e4)}
+.art.uso-grade,.art.certos,.art.grid4{
+  column-gap:var(--e2);row-gap:var(--e3)}
+.body{gap:var(--e4)}
+.ab-lado,.ab-frase,.ab-ficha,.nm-ficha,.cv-info,.dd ul,.cd,.degraus,
+.pc-vals,.fg{gap:var(--e1)}
+.art.sumario-l{gap:0}
+
+/* linha de lista: o vão entre colunas é o da grade */
+.lin,#voz .lin,#onde .lin{column-gap:var(--e3);row-gap:var(--e1)}
+.fi{column-gap:var(--e3);row-gap:0}
+.rf-l{column-gap:var(--e3)}
+.su{column-gap:var(--e3)}
+
+/* folga vertical: título, bloco, faixa */
+.top h2{margin-bottom:var(--e4)}
+.pg.prancha .top h2{margin-bottom:0}
+.md-t,.pl-t,.fl-t{margin-bottom:var(--e2)}
+.dd h3,.rf h3,.parte h3{margin-bottom:var(--e3)}
+.say p + p{margin-top:var(--e2)}
+.nm-ficha{margin-bottom:var(--e4)}
+.tc-tit{margin-bottom:var(--e5)}
+
+/* folga interna das linhas: metade do vão da grade, para a linha
+   respirar sem virar bloco */
+.lin{padding:var(--e2) 0}
+.fi{padding:var(--e2) 0}
+.rf-l{padding:var(--e1) 0}
+.su{padding:var(--e1) 0}
+.pc-t,.cmeta{padding:0}
+
+/* ══ Cinco colunas não cai na grade de doze ════════════════════════
+   A prancha de usos incorretos usava cinco; passa a seis, que é a
+   contagem que a grade tem. */
+#incorreto .uso-grade{grid-template-columns:repeat(6,minmax(0,1fr))}
+#correto .uso-grade{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media (max-width:1180px){
+  #incorreto .uso-grade{grid-template-columns:repeat(4,minmax(0,1fr))}
+  #correto .uso-grade{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:640px){
+  #incorreto .uso-grade{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+
+/* ── O que sobrou fora da escala ────────────────────────────────────
+   Segunda varredura: rodape, corpo do sumario, ficha de pendencia,
+   escada de tamanho, coluna do valor de X e as duas pranchas com vao
+   proprio. Todos passam a usar a escala. */
+.folio{gap:var(--e4)}
+.body,.body.sum,.contato .body{column-gap:var(--e3);row-gap:var(--e4)}
+.fl,.dg,.dg-out,.xcol,.art.pn-par,.art.as-par,.art:not([class*=" "]),
+#proporcoes .art,#valor-de-x .art.xpar{
+  column-gap:var(--e3);row-gap:var(--e3)}
+.es-head{column-gap:var(--e3)}
+.dg{row-gap:var(--e1)}
+
+/* ══════════════════════════════════════════════════════════════════
+   A ESCALA, COM BASE FORA DO PALCO
+   Em vw: vale em qualquer largura, inclusive quando o palco se
+   dissolve e a prancha vira página que rola. A media do palco
+   sobrescreve com cqw, que é proporcional ao slide.
+   ══════════════════════════════════════════════════════════════════ */
+:root{
+  --t-micro:clamp(11px, 1.15vw, 15px);
+  --t-mini: clamp(13px, 1.60vw, 19px);
+  --t-corpo:clamp(16px, 2.10vw, 24px);
+  --t-lead: clamp(19px, 2.60vw, 30px);
+  --t-sub:  clamp(23px, 3.20vw, 38px);
+  --t-lista:clamp(26px, 3.60vw, 44px);
+  --t-tit:  clamp(30px, 5.00vw, 58px);
+  --t-cab:  clamp(36px, 6.60vw, 76px);
+  --t-disp: clamp(48px,10.00vw,120px);
+  --t-num:  clamp(90px,30.00vw,300px);
+  --e1:clamp(5px,  0.55vw,  9px);
+  --e2:clamp(10px, 1.10vw, 18px);
+  --e3:clamp(18px, 2.20vw, 34px);
+  --e4:clamp(26px, 3.30vw, 50px);
+  --e5:clamp(34px, 4.40vw, 66px);
+  --e6:clamp(48px, 6.60vw, 98px);
+  --edge:clamp(18px, 2.20vw, 34px);
+}
+
+/* ══ Fora do palco a prancha rola: altura solta, folga de página ═══ */
+@media (max-width:1179px),(max-height:699px){
+  .palco > section{min-height:0;height:auto}
+  .palco > .pg{padding:var(--e5) var(--edge) var(--e6)}
+  .palco > .pg .body{gap:var(--e4)}
+  .palco > .divider{min-height:62vh;padding:var(--e5) var(--edge)}
+  .palco > .pg.cover{min-height:72vh;padding:var(--e5) var(--edge) var(--e5)}
+  /* o rodapé para de ser absoluto: numa página que rola ele fecha a
+     prancha, e absoluto ele encavalaria no conteúdo */
+  .palco > section .folio{position:static;margin-top:var(--e5);
+    flex-wrap:wrap;row-gap:var(--e2)}
+  .divider .folio{position:static;margin-top:var(--e5)}
+  .pg.cover .folio{margin-top:var(--e4)}
+}
+
+/* ══ A escada de largura ═══════════════════════════════════════════
+   Quatro degraus e nada entre eles: seis colunas, quatro, duas, uma.
+   Toda contagem divide doze, então a grade continua sendo a mesma. */
+@media (max-width:1100px){
+  .art.md-grade,.art.pl-par,.art.refs,.art.tipos,.art.chapas,
+  .art.imagens,.art.modos,.art.sumario,.pcs,.es-cols,.es-cols.es-4,
+  .menu-grade{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:620px){
+  .art.md-grade,.art.pl-par,.art.refs,.art.dd-par,.art.tipos,
+  .art.chapas,.art.imagens,.art.modos,.art.sumario,.art.ab-grade,
+  .art.xpar,.pcs,.es-cols,.es-cols.es-4,.menu-grade,.cr-tudo,
+  .art.as-par,.art.pn-par{grid-template-columns:minmax(0,1fr)}
+  #incorreto .uso-grade,#correto .uso-grade{
+    grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+
+/* ══ Linha de lista no telefone ════════════════════════════════════
+   Três colunas numa largura de 390 dão 110px por coluna: o nome da
+   peça quebra em quatro linhas. Vira duas linhas empilhadas, com o
+   estado ao lado do rótulo. */
+@media (max-width:760px){
+  .lin,#voz .lin,#onde .lin{grid-template-columns:minmax(0,1fr) auto;
+    row-gap:var(--e1);padding:var(--e2) 0}
+  .lin .lc{grid-column:1;grid-row:1}
+  .lin .ls{grid-column:2;grid-row:1;justify-self:end;align-self:baseline}
+  .lin .ln,.lin .ld{grid-column:1 / -1}
+  .fi{grid-template-columns:minmax(0,1fr);row-gap:var(--e1)}
+  .rf-l{flex-wrap:wrap;row-gap:var(--e1)}
+  .rf-v{text-align:left}
+  .su{grid-template-columns:2.4em minmax(0,1fr) auto}
+}
+
+/* ══ A capa no telefone ════════════════════════════════════════════
+   Justificar 'GUIA DA MARCA' em 390px abre vãos de 60px entre as
+   palavras. Abaixo de 760 o justificado sai e o título alinha à
+   esquerda. */
+@media (max-width:760px){
+  .cv-l1,.cv-l2,.cv-l3{text-align:left;text-align-last:left}
+  .cv-info{width:100%;justify-self:start}
+}
+
+/* ── A referencia rapida no telefone ────────────────────────────────
+   .rf-l e flex com space-between e o valor alinhado a direita: em
+   coluna unica de 390px o valor nao tinha para onde encolher. Vira
+   rotulo em cima, valor embaixo, os dois a esquerda. */
+@media (max-width:760px){
+  .rf-l{flex-direction:column;align-items:flex-start;gap:2px}
+  .rf-v{text-align:left}
+  .rf h3{margin-bottom:var(--e2)}
+}
+/* o desenho da prancha nunca passa da largura da coluna */
+.pg.prancha .art svg,.malha svg{max-width:100%}
+
+/* ── Fora do palco nada centra na altura ────────────────────────────
+   Numa pagina que rola nao ha altura fixa contra a qual centrar: o
+   .body herdava justify-content:center e abria um campo morto acima
+   do titulo que so existia porque a prancha ainda tinha altura de
+   sobra. Na pagina o conteudo comeca no topo. */
+@media (max-width:1179px),(max-height:699px){
+  .palco > section .body,.palco > section .art,
+  .palco > section .art.pl-par,.palco > section .art.md-grade,
+  .palco > section .art.fl-lista,.palco > section .body.sum{
+    justify-content:flex-start;align-content:start}
+  .palco > .pg.cover{grid-template-rows:auto auto auto auto auto;
+    row-gap:var(--e5);min-height:0}
+  .palco > .pg.cover .cv-info{justify-self:start;width:100%}
+  .palco > .divider{min-height:0;place-content:start end}
+}
+
+/* ── Os dois ultimos estouros ───────────────────────────────────────
+   O desenho da celula de uso incorreto passava 23px em uma proporcao:
+   a celula encolhe com a grade, o svg nao. E a ficha do especime
+   passava 3px da margem no telefone. */
+.uso-q svg,.uso svg,.ok-q svg{max-width:100%;max-height:100%}
+.es-meta{max-width:100%;min-width:0}
+.es-meta p{overflow-wrap:anywhere}
+
+/* ── O desenho girado precisa de teto menor ─────────────────────────
+   Girar 12 graus um desenho de 2,5:1 cresce a caixa dele em 8% de
+   largura; inclinar 15 graus cresce 11%; a perspectiva cresce mais.
+   A regra de max-width:100% que eu tinha acabado de por sobrescreveu
+   o teto antigo de 60% dos desenhos transformados, e a celula de uso
+   incorreto voltou a passar 23px em 640 de largura. O teto volta, e
+   agora depois. */
+.uso-q svg[style*="transform"],.uso svg[style*="transform"]{
+  max-width:66%;max-height:66%}
+
+/* A perspectiva infla a caixa do desenho alem da largura de layout:
+   156px de largura viram 269 de caixa. Fora do palco a celula e
+   larga o bastante para o teto de 60% - o mesmo que a prancha usava
+   antes - resolver sem cortar nada. */
+@media (max-width:1179px),(max-height:699px){
+  .uso-q svg:not(.uso-x){max-width:60%;max-height:60%}
+}
+
+/* ══ O que é a TÉRA: declaração na largura, ficha embaixo ══════════ */
+@media (min-width:1180px) and (min-height:700px){
+  #missao .art.ab-grade{grid-template-columns:minmax(0,1fr);
+    grid-template-rows:auto minmax(0,1fr);align-content:start;
+    align-items:start;row-gap:var(--e5)}
+  #missao .ab-lado{display:block}
+  #missao .ab-ficha{display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    column-gap:var(--e3);row-gap:0;align-content:start}
+}
+#missao .ab-frase{display:block}
+#missao .ab-tese{font-size:var(--t-cab);line-height:.86;max-width:26ch;
+  margin-bottom:var(--e3)}
+#missao .ab-nota{max-width:52ch}
+#missao .fi{grid-template-columns:8.5em minmax(0,1fr)}
+
+/* ══ O valor de X: as duas colunas começam na mesma linha ══════════ */
+@media (min-width:1180px) and (min-height:700px){
+  #valor-de-x .art.xpar{align-items:start;
+    grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr)}
+  #valor-de-x .malha{align-self:start;margin-top:var(--e4)}
+  #valor-de-x .malha svg{width:100%;height:auto;max-height:none}
+}
+
+/* Contei a altura da prancha: 660px de campo. Titulo 93, declaracao
+   em 6,6cqw daria 4 linhas e 300, e a ficha de quatro linhas em duas
+   colunas com valor de 3,0cqw quebrava em duas linhas cada, 488. Sao
+   885 num campo de 660. A declaracao para no degrau de titulo (3
+   linhas, 192) e o valor da ficha no de corpo, onde cabe em uma linha
+   dentro de meia largura: 653. */
+#missao .ab-tese{font-size:var(--t-tit);line-height:.88;max-width:30ch}
+#missao .fi-v{font-size:var(--t-corpo);line-height:1.2}
+#missao .fi{padding:var(--e1) 0;grid-template-columns:7.5em minmax(0,1fr)}
+#missao .ab-nota{font-size:var(--t-micro)}
+
+/* Em meia largura o rotulo da ficha e o valor nao cabem lado a lado:
+   QUEM APRESENTA pede 9em e sobra pouco para o valor. Rotulo em cima,
+   valor embaixo - o mesmo par de duas linhas do rodape e da capa. */
+#missao .fi{grid-template-columns:minmax(0,1fr);row-gap:2px;
+  padding:var(--e2) 0}
+#missao .fi-k{grid-column:1}
+#missao .fi-v{grid-column:1}
+
+/* o desenho com perspectiva na celula estreita: a caixa projetada
+   passa da largura de layout, entao o teto conta a projecao. */
+@media (max-width:1179px),(max-height:699px){
+  #incorreto .uso-q svg:not(.uso-x){max-width:52%;max-height:52%}
+}
+
+/* Sete linhas a 39px com folga de e2 nos dois lados dao 469px, e o
+   campo depois do titulo e da nota tem 447. A folga da linha cai para
+   e1: a linha ja tem entrelinha de 1,2, e o que separa uma da outra e
+   o salto para o rotulo em micro. */
+.lin{padding:var(--e1) 0}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
