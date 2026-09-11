@@ -4239,6 +4239,20 @@ table.xv thead th,table.xv tbody th,table.xv tbody td{font-size:var(--t-mini)}
   .pg.story video,
   .pg.story video:nth-child(1){width:min(100%,78cqw);height:auto}
 }
+
+/* ══ O canto preto do quadro do Instagram ══════════════════════════
+   O post e o story sao cartoes de canto arredondado, e o video e'
+   retangular: o que sobra nos cantos e' preto. Sobre o papel do guia
+   isso aparecia como quatro cunhas escuras.
+   Medido num quadro extraido: canto de 29px em 720 no feed, 34px em
+   620 no story, e nada nas pranchas de cartaz, que sao quadradas.
+   A mascara leva 15% de folga sobre o raio medido, porque o canto e'
+   continuo e nao circular - com o raio exato sobrava farpa na ponta.
+   Os dois eixos vao separados: porcentagem unica viraria elipse numa
+   caixa que nao e' quadrada.
+   ══════════════════════════════════════════════════════════════════ */
+.pg.feed video{border-radius:4.72% / 3.09%}
+.pg.story video{border-radius:6.29% / 3.54%}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
